@@ -1,9 +1,13 @@
+class_name Player
 extends CharacterBody2D
 
-const SPEED_MAX = 100.0
+const SPEED_MAX = 70.0
 const JUMP_VELOCITY_INITIAL = -200.0
 const JUMP_APPLY_TIME = 1.0
 const JUMP_APPLY_FORCE = -12.0
+const COYOTE_TIME = 0.2
+
+signal player_died(player: Player)
 
 @export var light_pulse_scene: PackedScene
 @export var world_root: WorldRoot
@@ -14,10 +18,17 @@ var facing_right = true
 var step_timer = 0.0
 var walking = false
 var floored = false
-
+var coyote_timer = 0.0
 
 func _ready() -> void:
+	$LandingParticles.emitting = false
 	$Sprite2D.play("idle")
+	
+
+
+func kill() -> void:
+	print("player.kill()")
+	emit_signal("player_died", self)
 
 
 func _physics_process(delta: float) -> void:
@@ -25,18 +36,21 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		if floored:
+			coyote_timer = COYOTE_TIME
 		floored = false
+		coyote_timer -= delta
 	else:
 		if !floored:
-			print("Land!")
 			create_land_pulse()
 			
 		floored = true
 
 	# Handle jump
-	if Input.is_action_just_pressed("jump") && is_on_floor():
+	if Input.is_action_just_pressed("jump") && (is_on_floor() || coyote_timer > 0.0):
 		velocity.y = JUMP_VELOCITY_INITIAL
 		jump_timer = JUMP_APPLY_TIME
+		coyote_timer = 0.0
 	elif Input.is_action_pressed("jump") && jump_timer > 0:
 		velocity.y += JUMP_APPLY_FORCE * jump_timer
 		jump_timer -= delta
@@ -78,7 +92,6 @@ func _physics_process(delta: float) -> void:
 
 
 func create_land_pulse() -> void:
-	print("Land pulse boom")
 	var pulse = light_pulse_scene.instantiate() as LightPulse
 	pulse.global_position = self.global_position + Vector2(0.0, 11.0)
 	pulse.burst_light_energy = 1.0

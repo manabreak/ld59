@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://3o5icxnu0ph6" path="res://world_root.gd" id="1_8dww3"]
 [ext_resource type="Texture2D" uid="uid://blgdc6ihpxbph" path="res://graphics/tileset.png" id="1_bpw3s"]
 [ext_resource type="Script" uid="uid://bjpqble50grbp" path="res://player.gd" id="3_5crvj"]
+[ext_resource type="PackedScene" uid="uid://bvhrt23etro43" path="res://objects/spike.tscn" id="3_jkqfw"]
 [ext_resource type="PackedScene" uid="uid://c2cpauy56t8o5" path="res://light_pulse.tscn" id="4_jkqfw"]
 [ext_resource type="Texture2D" uid="uid://daagvjxcsax4e" path="res://graphics/sprites.png" id="5_bpw3s"]
+[ext_resource type="Script" uid="uid://c4rhi3jdf4icv" path="res://checkpoint.gd" id="6_8dww3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pyidc"]
 texture = ExtResource("1_bpw3s")
@@ -57,9 +59,22 @@ texture = ExtResource("1_bpw3s")
 1:2/0 = 0
 1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_35ggv"]
+resource_name = "hazards"
+scenes/1/scene = ExtResource("3_jkqfw")
+
 [sub_resource type="TileSet" id="TileSet_vvh5c"]
 physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_pyidc")
+sources/1 = SubResource("TileSetScenesCollectionSource_35ggv")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qr8tj"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(96, 0, 16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hioh6"]
+size = Vector2(6, 28)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pq8q7"]
 radius = 4.0
@@ -134,16 +149,50 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0gtk"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="Curve" id="Curve_qr8tj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.8011827, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hioh6"]
+curve = SubResource("Curve_qr8tj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n48ob"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 63.333
+initial_velocity_min = 3.0
+initial_velocity_max = 6.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_hioh6")
+
 [node name="WorldRoot" type="Node2D" unique_id=165118444 node_paths=PackedStringArray("main_camera")]
 script = ExtResource("1_8dww3")
 main_camera = NodePath("Player/Camera2D")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1129482321]
-tile_map_data = PackedByteArray("AAACAAYAAAABAAAAAAADAAYAAAACAAAAAAAEAAYAAAACAAAAAAAFAAYAAAACAAAAAAAGAAYAAAADAAAAAAAIAAQAAAABAAAAAAAJAAQAAAACAAAAAAAKAAQAAAACAAAAAAALAAQAAAACAAAAAAAMAAQAAAADAAAAAAANAAYAAAAAAAEAAAANAAcAAAAEAAEAAAAOAAcAAAACAAAAAAAPAAcAAAAFAAAAAAASAAUAAAAAAAAAAAAVAAUAAAAAAAAAAAAYAAUAAAAAAAAAAAAPAAgAAAAEAAEAAAAQAAgAAAACAAAAAAARAAgAAAACAAAAAAASAAgAAAACAAAAAAATAAgAAAACAAAAAAAUAAgAAAACAAAAAAAVAAgAAAACAAAAAAAWAAgAAAACAAAAAAAXAAgAAAACAAAAAAAYAAgAAAACAAAAAAAZAAgAAAACAAAAAAAaAAgAAAACAAAAAAAbAAgAAAAFAAEAAAAbAAcAAAAEAAAAAAAcAAcAAAAFAAEAAAAcAAYAAAAEAAAAAAAdAAYAAAAFAAEAAAAdAAUAAAAEAAAAAAAeAAUAAAAFAAEAAAAfAAQAAAACAAAAAAAgAAQAAAADAAAAAAAeAAQAAAAEAAAAAAA=")
+tile_map_data = PackedByteArray("AAAkACAAAAAAAAAAAAAlACAAAAAAAAAAAAAmACAAAAAAAAAAAAAnACAAAAAAAAAAAAAoACAAAAAAAAAAAAApACAAAAAAAAAAAAAqACAAAAAAAAAAAAArACAAAAAAAAAAAAAsACAAAAAAAAAAAAAtACAAAAAAAAAAAAAuACAAAAAAAAAAAAAvACAAAAAAAAAAAAAwACAAAAAAAAAAAAAxACAAAAAAAAAAAAAyACAAAAAAAAAAAAAzACAAAAAAAAAAAAAzAB8AAAAAAAAAAAAzAB4AAAAAAAAAAAA0AB4AAAAAAAAAAAA1AB4AAAAAAAAAAAA2AB4AAAAAAAAAAAA2AB8AAAAAAAAAAAA2ACAAAAAAAAAAAAA3ACAAAAAAAAAAAAA4ACAAAAAAAAAAAAA5ACAAAAAAAAAAAAA6ACAAAAAAAAAAAAA7ACAAAAAAAAAAAAA8ACAAAAAAAAAAAAA9ACAAAAAAAAAAAABBACAAAAAAAAAAAABFACAAAAAAAAAAAABJACAAAAAAAAAAAABKACAAAAAAAAAAAABLACAAAAAAAAAAAABMACAAAAAAAAAAAABNACAAAAAAAAAAAABOACAAAAAAAAAAAABPACAAAAAAAAAAAABQACAAAAAAAAAAAABJACEAAAAAAAAAAABJACIAAAAAAAAAAABIACIAAAAAAAAAAABHACIAAAAAAAAAAABGACIAAAAAAAAAAABFACIAAAAAAAAAAABEACIAAAAAAAAAAABFACEAAAAAAAAAAABDACIAAAAAAAAAAABCACIAAAAAAAAAAABBACIAAAAAAAAAAABBACEAAAAAAAAAAABAACIAAAAAAAAAAAA/ACIAAAAAAAAAAAA+ACIAAAAAAAAAAAA9ACIAAAAAAAAAAAA9ACEAAAAAAAAAAABQACEAAAAAAAAAAABQACIAAAAAAAAAAABRACIAAAAAAAAAAABSACIAAAAAAAAAAABTACIAAAAAAAAAAABUACIAAAAAAAAAAABUACEAAAAAAAAAAABUACAAAAAAAAAAAABVACIAAAAAAAAAAABWACIAAAAAAAAAAABXACIAAAAAAAAAAABYACIAAAAAAAAAAABYACEAAAAAAAAAAABYACAAAAAAAAAAAABZACAAAAAAAAAAAABaACAAAAAAAAAAAABbACAAAAAAAAAAAABcACAAAAAAAAAAAABdACAAAAAAAAAAAABeACAAAAAAAAAAAABfACAAAAAAAAAAAABRACEAAQAAAAAAAQBSACEAAQAAAAAAAQBTACEAAQAAAAAAAQBVACEAAQAAAAAAAQBWACEAAQAAAAAAAQBXACEAAQAAAAAAAQA=")
 tile_set = SubResource("TileSet_vvh5c")
 
+[node name="Checkpoint" type="Area2D" parent="." unique_id=1328828379]
+position = Vector2(1224, 496)
+collision_mask = 3
+script = ExtResource("6_8dww3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Checkpoint" unique_id=785024285]
+texture = SubResource("AtlasTexture_qr8tj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint" unique_id=1896329814]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_hioh6")
+
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1592304653 node_paths=PackedStringArray("world_root")]
-position = Vector2(174, 27)
+position = Vector2(1240, 484)
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("3_5crvj")
 light_pulse_scene = ExtResource("4_jkqfw")
 world_root = NodePath("..")
@@ -153,9 +202,18 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_pq8q7")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=865866002]
+position_smoothing_enabled = true
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Player" unique_id=250619034]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_35ggv")
-animation = &"walk"
-frame_progress = 0.93667746
+animation = &"idle"
+frame_progress = 0.046329923
+
+[node name="LandingParticles" type="GPUParticles2D" parent="Player" unique_id=1695613112]
+position = Vector2(0, 12)
+emitting = false
+amount = 15
+texture = SubResource("AtlasTexture_u0gtk")
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_n48ob")
