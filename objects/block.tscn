@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://fgshdp1nbmiv"]
+
+[ext_resource type="Texture2D" uid="uid://daagvjxcsax4e" path="res://graphics/sprites.png" id="1_5tpor"]
+[ext_resource type="Script" uid="uid://dkmlfi2r5n2vo" path="res://objects/block.gd" id="1_lylmh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5crvj"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jkqfw"]
+size = Vector2(24, 24)
+
+[node name="Block" type="RigidBody2D" unique_id=1894263500]
+script = ExtResource("1_lylmh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=217752294]
+shape = SubResource("RectangleShape2D_5crvj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1751849765]
+texture = ExtResource("1_5tpor")
+region_enabled = true
+region_rect = Rect2(128, 16, 16, 16)
+
+[node name="PickupArea" type="Area2D" parent="." unique_id=1804368151]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea" unique_id=738925904]
+shape = SubResource("RectangleShape2D_jkqfw")

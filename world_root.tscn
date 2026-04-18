@@ -4,9 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://blgdc6ihpxbph" path="res://graphics/tileset.png" id="1_bpw3s"]
 [ext_resource type="Script" uid="uid://bjpqble50grbp" path="res://player.gd" id="3_5crvj"]
 [ext_resource type="PackedScene" uid="uid://bvhrt23etro43" path="res://objects/spike.tscn" id="3_jkqfw"]
+[ext_resource type="PackedScene" uid="uid://b6nrui4oe2mta" path="res://objects/checkpoint.tscn" id="4_35ggv"]
 [ext_resource type="PackedScene" uid="uid://c2cpauy56t8o5" path="res://light_pulse.tscn" id="4_jkqfw"]
 [ext_resource type="Texture2D" uid="uid://daagvjxcsax4e" path="res://graphics/sprites.png" id="5_bpw3s"]
-[ext_resource type="Script" uid="uid://c4rhi3jdf4icv" path="res://checkpoint.gd" id="6_8dww3"]
+[ext_resource type="Script" uid="uid://7o3obrwb0m0j" path="res://story_teller.gd" id="5_ta1kb"]
+[ext_resource type="PackedScene" uid="uid://fgshdp1nbmiv" path="res://objects/block.tscn" id="8_jkqfw"]
+[ext_resource type="Script" uid="uid://cspda1gqr4v62" path="res://message_area.gd" id="9_35ggv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pyidc"]
 texture = ExtResource("1_bpw3s")
@@ -69,13 +72,6 @@ physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_pyidc")
 sources/1 = SubResource("TileSetScenesCollectionSource_35ggv")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qr8tj"]
-atlas = ExtResource("5_bpw3s")
-region = Rect2(96, 0, 16, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hioh6"]
-size = Vector2(6, 28)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pq8q7"]
 radius = 4.0
 height = 22.0
@@ -96,6 +92,22 @@ region = Rect2(80, 32, 16, 32)
 atlas = ExtResource("5_bpw3s")
 region = Rect2(96, 32, 16, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hioh6"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(112, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n48ob"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(128, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_islf1"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(144, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0r25b"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(160, 32, 16, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_35ggv"]
 atlas = ExtResource("5_bpw3s")
 region = Rect2(48, 64, 16, 32)
@@ -111,6 +123,22 @@ region = Rect2(80, 64, 16, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_k6e3d"]
 atlas = ExtResource("5_bpw3s")
 region = Rect2(96, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5dbi"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(112, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmjb8"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(128, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46ax4"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(144, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xc4gs"]
+atlas = ExtResource("5_bpw3s")
+region = Rect2(160, 64, 16, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_35ggv"]
 animations = [{
@@ -132,6 +160,23 @@ animations = [{
 "speed": 10.0
 }, {
 "frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_hioh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n48ob")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_islf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0r25b")
+}],
+"loop": true,
+"name": &"idle_carry",
+"speed": 10.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_35ggv")
 }, {
@@ -146,6 +191,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5dbi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmjb8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46ax4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xc4gs")
+}],
+"loop": true,
+"name": &"walk_carry",
 "speed": 10.0
 }]
 
@@ -169,28 +231,52 @@ initial_velocity_max = 6.0
 gravity = Vector3(0, 0, 0)
 alpha_curve = SubResource("CurveTexture_hioh6")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_35ggv"]
+size = Vector2(57.25, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hioh6"]
+size = Vector2(57.25, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ta1kb"]
+size = Vector2(48, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ntps4"]
+size = Vector2(48, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6e3d"]
+size = Vector2(48, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0gtk"]
+size = Vector2(187, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qr8tj"]
+size = Vector2(27.5, 33.5)
+
 [node name="WorldRoot" type="Node2D" unique_id=165118444 node_paths=PackedStringArray("main_camera")]
 script = ExtResource("1_8dww3")
 main_camera = NodePath("Player/Camera2D")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1129482321]
-tile_map_data = PackedByteArray("AAAkACAAAAAAAAAAAAAlACAAAAAAAAAAAAAmACAAAAAAAAAAAAAnACAAAAAAAAAAAAAoACAAAAAAAAAAAAApACAAAAAAAAAAAAAqACAAAAAAAAAAAAArACAAAAAAAAAAAAAsACAAAAAAAAAAAAAtACAAAAAAAAAAAAAuACAAAAAAAAAAAAAvACAAAAAAAAAAAAAwACAAAAAAAAAAAAAxACAAAAAAAAAAAAAyACAAAAAAAAAAAAAzACAAAAAAAAAAAAAzAB8AAAAAAAAAAAAzAB4AAAAAAAAAAAA0AB4AAAAAAAAAAAA1AB4AAAAAAAAAAAA2AB4AAAAAAAAAAAA2AB8AAAAAAAAAAAA2ACAAAAAAAAAAAAA3ACAAAAAAAAAAAAA4ACAAAAAAAAAAAAA5ACAAAAAAAAAAAAA6ACAAAAAAAAAAAAA7ACAAAAAAAAAAAAA8ACAAAAAAAAAAAAA9ACAAAAAAAAAAAABBACAAAAAAAAAAAABFACAAAAAAAAAAAABJACAAAAAAAAAAAABKACAAAAAAAAAAAABLACAAAAAAAAAAAABMACAAAAAAAAAAAABNACAAAAAAAAAAAABOACAAAAAAAAAAAABPACAAAAAAAAAAAABQACAAAAAAAAAAAABJACEAAAAAAAAAAABJACIAAAAAAAAAAABIACIAAAAAAAAAAABHACIAAAAAAAAAAABGACIAAAAAAAAAAABFACIAAAAAAAAAAABEACIAAAAAAAAAAABFACEAAAAAAAAAAABDACIAAAAAAAAAAABCACIAAAAAAAAAAABBACIAAAAAAAAAAABBACEAAAAAAAAAAABAACIAAAAAAAAAAAA/ACIAAAAAAAAAAAA+ACIAAAAAAAAAAAA9ACIAAAAAAAAAAAA9ACEAAAAAAAAAAABQACEAAAAAAAAAAABQACIAAAAAAAAAAABRACIAAAAAAAAAAABSACIAAAAAAAAAAABTACIAAAAAAAAAAABUACIAAAAAAAAAAABUACEAAAAAAAAAAABUACAAAAAAAAAAAABVACIAAAAAAAAAAABWACIAAAAAAAAAAABXACIAAAAAAAAAAABYACIAAAAAAAAAAABYACEAAAAAAAAAAABYACAAAAAAAAAAAABZACAAAAAAAAAAAABaACAAAAAAAAAAAABbACAAAAAAAAAAAABcACAAAAAAAAAAAABdACAAAAAAAAAAAABeACAAAAAAAAAAAABfACAAAAAAAAAAAABRACEAAQAAAAAAAQBSACEAAQAAAAAAAQBTACEAAQAAAAAAAQBVACEAAQAAAAAAAQBWACEAAQAAAAAAAQBXACEAAQAAAAAAAQA=")
+tile_map_data = PackedByteArray("AAAkACAAAAACAAAAAAAlACAAAAACAAAAAAAmACAAAAACAAAAAAAnACAAAAACAAAAAAAoACAAAAACAAAAAAApACAAAAACAAAAAAAqACAAAAACAAAAAAArACAAAAACAAAAAAAsACAAAAACAAAAAAAtACAAAAACAAAAAAAuACAAAAACAAAAAAAvACAAAAACAAAAAAAwACAAAAACAAAAAAAxACAAAAACAAAAAAAyACAAAAACAAAAAAAzACAAAAAFAAEAAAAzAB8AAAAAAAIAAAAzAB4AAAAEAAAAAAA0AB4AAAACAAAAAAA1AB4AAAACAAAAAAA2AB4AAAAFAAAAAAA2AB8AAAAAAAIAAAA2ACAAAAAEAAEAAAA3ACAAAAACAAAAAAA4ACAAAAACAAAAAAA5ACAAAAACAAAAAAA6ACAAAAACAAAAAAA7ACAAAAACAAAAAAA8ACAAAAACAAAAAAA9ACAAAAAFAAAAAABBACAAAAAAAAEAAABFACAAAAAAAAEAAABJACAAAAAEAAAAAABKACAAAAACAAAAAABLACAAAAACAAAAAABMACAAAAACAAAAAABNACAAAAACAAAAAABOACAAAAACAAAAAABPACAAAAACAAAAAABQACAAAAAFAAAAAABJACEAAAAAAAIAAABJACIAAAAFAAEAAABIACIAAAACAAAAAABHACIAAAACAAAAAABGACIAAAACAAAAAABFACIAAAAEAAMAAABEACIAAAACAAAAAABFACEAAAAAAAIAAABDACIAAAACAAAAAABCACIAAAACAAAAAABBACIAAAAEAAMAAABBACEAAAAAAAIAAABAACIAAAACAAAAAAA/ACIAAAACAAAAAAA+ACIAAAACAAAAAAA9ACIAAAAEAAEAAAA9ACEAAAAAAAIAAABQACEAAAAAAAIAAABQACIAAAAEAAEAAABRACIAAAACAAAAAABSACIAAAACAAAAAABTACIAAAACAAAAAABUACIAAAAEAAMAAABUACEAAAAAAAIAAABUACAAAAAAAAEAAABVACIAAAACAAAAAABWACIAAAACAAAAAABXACIAAAACAAAAAABYACIAAAAFAAEAAABYACEAAAAAAAIAAABYACAAAAAEAAAAAABZACAAAAACAAAAAABaACAAAAACAAAAAABbACAAAAACAAAAAABcACAAAAACAAAAAABdACAAAAACAAAAAABeACAAAAACAAAAAABfACAAAAADAAAAAABRACEAAQAAAAAAAQBSACEAAQAAAAAAAQBTACEAAQAAAAAAAQBVACEAAQAAAAAAAQBWACEAAQAAAAAAAQBXACEAAQAAAAAAAQAjACAAAAAEAAEAAAAjAB8AAAAAAAIAAAAjAB4AAAAAAAIAAAAjAB0AAAAFAAAAAAAiAB0AAAACAAAAAAAhAB0AAAACAAAAAAAgAB0AAAAEAAEAAAAgABwAAAAAAAIAAAAgABsAAAAFAAAAAAAfABsAAAACAAAAAAAeABsAAAABAAAAAAA=")
 tile_set = SubResource("TileSet_vvh5c")
 
-[node name="Checkpoint" type="Area2D" parent="." unique_id=1328828379]
+[node name="Checkpoint" parent="." unique_id=198456919 instance=ExtResource("4_35ggv")]
 position = Vector2(1224, 496)
-collision_mask = 3
-script = ExtResource("6_8dww3")
 
-[node name="Sprite2D" type="Sprite2D" parent="Checkpoint" unique_id=785024285]
-texture = SubResource("AtlasTexture_qr8tj")
+[node name="Checkpoint2" parent="." unique_id=1965432713 instance=ExtResource("4_35ggv")]
+position = Vector2(504, 416)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint" unique_id=1896329814]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_hioh6")
+[node name="Checkpoint3" parent="." unique_id=1150321343 instance=ExtResource("4_35ggv")]
+position = Vector2(1435, 496)
+
+[node name="StoryTeller" type="Node2D" parent="." unique_id=104614071 node_paths=PackedStringArray("player", "world_root")]
+script = ExtResource("5_ta1kb")
+enable_storytelling = false
+player = NodePath("../Player")
+world_root = NodePath("..")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1592304653 node_paths=PackedStringArray("world_root")]
-position = Vector2(1240, 484)
+position = Vector2(1175, 469)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("3_5crvj")
@@ -207,8 +293,8 @@ position_smoothing_enabled = true
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Player" unique_id=250619034]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_35ggv")
-animation = &"idle"
-frame_progress = 0.046329923
+animation = &"walk_carry"
+frame_progress = 0.6212987
 
 [node name="LandingParticles" type="GPUParticles2D" parent="Player" unique_id=1695613112]
 position = Vector2(0, 12)
@@ -217,3 +303,87 @@ amount = 15
 texture = SubResource("AtlasTexture_u0gtk")
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_n48ob")
+
+[node name="Block" parent="." unique_id=1296386376 instance=ExtResource("8_jkqfw")]
+position = Vector2(1504, 498)
+
+[node name="MessageAreas" type="Node2D" parent="." unique_id=852340320]
+
+[node name="MessageAreaStart" type="Area2D" parent="MessageAreas" unique_id=1325205215 node_paths=PackedStringArray("world_root")]
+position = Vector2(606, 476)
+collision_mask = 2
+script = ExtResource("9_35ggv")
+default_text = "Can't jump that high. Dang."
+carry_text = "Let's just drop this here..."
+world_root = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaStart" unique_id=1897144521]
+position = Vector2(-8.625, 17)
+shape = SubResource("RectangleShape2D_35ggv")
+
+[node name="MessageAreaBlockDrop" type="Area2D" parent="MessageAreas" unique_id=33556244 node_paths=PackedStringArray("world_root")]
+position = Vector2(1571, 578)
+collision_mask = 3
+script = ExtResource("9_35ggv")
+default_text = "Why did you do that?"
+world_root = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaBlockDrop" unique_id=1601952062]
+position = Vector2(-8.625, 17)
+shape = SubResource("RectangleShape2D_hioh6")
+
+[node name="MessageAreaHahaa" type="Area2D" parent="MessageAreas" unique_id=1167121684 node_paths=PackedStringArray("world_root")]
+position = Vector2(606, 476)
+collision_mask = 2
+script = ExtResource("9_35ggv")
+default_text = "Yeah! Take that, you stupid game designer!"
+carry_text = "How did you do that?"
+world_root = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaHahaa" unique_id=1746087445]
+position = Vector2(-57, -27.5)
+shape = SubResource("RectangleShape2D_ta1kb")
+
+[node name="MessageAreaCheckpoint" type="Area2D" parent="MessageAreas" unique_id=1396389169 node_paths=PackedStringArray("world_root")]
+position = Vector2(1281, 523)
+collision_mask = 2
+script = ExtResource("9_35ggv")
+default_text = "I think this is a checkpoint."
+world_root = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaCheckpoint" unique_id=244308990]
+position = Vector2(-57, -27.5)
+shape = SubResource("RectangleShape2D_ntps4")
+
+[node name="MessageAreaBlock" type="Area2D" parent="MessageAreas" unique_id=372256165 node_paths=PackedStringArray("world_root")]
+position = Vector2(1521, 522)
+collision_mask = 2
+script = ExtResource("9_35ggv")
+default_text = "Ooh, a block!"
+world_root = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaBlock" unique_id=499350003]
+position = Vector2(-57, -27.5)
+shape = SubResource("RectangleShape2D_k6e3d")
+
+[node name="MessageAreaNonSpikyPit" type="Area2D" parent="MessageAreas" unique_id=780930497 node_paths=PackedStringArray("world_root")]
+position = Vector2(1069, 568)
+collision_mask = 2
+script = ExtResource("9_35ggv")
+default_text = "Phew! Good thing there weren't spikes here."
+world_root = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaNonSpikyPit" unique_id=1434410437]
+position = Vector2(12.5, -27.5)
+shape = SubResource("RectangleShape2D_u0gtk")
+
+[node name="MessageAreaSpikyPit" type="Area2D" parent="MessageAreas" unique_id=1956301252 node_paths=PackedStringArray("world_root")]
+position = Vector2(1069, 568)
+collision_mask = 2
+script = ExtResource("9_35ggv")
+default_text = "...spikes. I knew it."
+world_root = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaSpikyPit" unique_id=146721773]
+position = Vector2(221, -66)
+shape = SubResource("RectangleShape2D_qr8tj")

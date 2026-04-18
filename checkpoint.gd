@@ -4,10 +4,11 @@ extends Area2D
 signal checkpoint_activated(checkpoint: Checkpoint)
 
 var activated = false
-
+@export var light_sprite: Sprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	light_sprite.global_position = self.global_position
 	self.body_entered.connect(self.on_body_entered)
 
 

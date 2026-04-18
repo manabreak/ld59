@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://dsnc3ktpo05ln"]
+
+[ext_resource type="FontFile" uid="uid://5nd3sgjsp0w3" path="res://Kenney Mini.ttf" id="1_k6lyt"]
+
+[resource]
+default_font = ExtResource("1_k6lyt")

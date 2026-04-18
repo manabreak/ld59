@@ -4,12 +4,14 @@ extends Node2D
 @export var main_camera: Camera2D
 @export var light_camera: Camera2D
 @export var light_manager: LightManager
+@export var debug_ui: DebugUi
+@export var bubbles: Bubbles
 
 @export var checkpoints: Array[Checkpoint] = []
 
 var initial_spawn_position: Vector2
 var last_checkpoint: Checkpoint = null
-
+var first_checkpoint_reached = false
 
 func _ready() -> void:
 	initial_spawn_position = $Player.global_position
@@ -22,8 +24,20 @@ func _ready() -> void:
 			c.player_died.connect(self.on_player_died)
 
 
+func show_bubble(text: String) -> void:
+	bubbles.show_text(text)
+
+
+func hide_bubble() -> void:
+	bubbles.hide_text()
+
+
 func on_checkpoint_activated(checkpoint: Checkpoint) -> void:
+	if !first_checkpoint_reached:
+		first_checkpoint_reached = true
+		show_bubble("WHOA!")
 	last_checkpoint = checkpoint
+	light_manager.add_global_light(checkpoint.light_sprite)
 
 
 func on_player_died(player: Player) -> void:
@@ -40,9 +54,11 @@ func _process(delta: float) -> void:
 		$Player.kill()
 	
 	if light_camera:
-		light_camera.global_position = main_camera.global_position
+		light_camera.global_position = $Player.global_position
 	if light_manager:
 		light_manager.player_position_changed($Player.global_position)
+	if debug_ui:
+		debug_ui.player_position_changed($Player.global_position)
 
 
 func add_pulse(pulse: LightPulse) -> void:
