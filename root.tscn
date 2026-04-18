@@ -1,3 +1,58 @@
 [gd_scene format=3 uid="uid://qdqtn12x5rbr"]
 
+[ext_resource type="PackedScene" uid="uid://hec6hndve8un" path="res://world_root.tscn" id="1_pq8q7"]
+[ext_resource type="Script" uid="uid://bau18xql1418s" path="res://light_manager.gd" id="2_28aoi"]
+[ext_resource type="Shader" uid="uid://cs8riyhgrwi5y" path="res://light_shader.gdshader" id="3_vvh5c"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vvh5c"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_28aoi"]
+viewport_path = NodePath("LightsViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_28aoi"]
+resource_local_to_scene = true
+shader = ExtResource("3_vvh5c")
+shader_parameter/base_tex = SubResource("ViewportTexture_vvh5c")
+shader_parameter/lights_tex = SubResource("ViewportTexture_28aoi")
+shader_parameter/light_intensity = 2.0
+
 [node name="Root" type="Node2D" unique_id=1613437739]
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1732594080]
+canvas_item_default_texture_filter = 0
+size = Vector2i(480, 270)
+
+[node name="WorldRoot" parent="SubViewport" unique_id=165118444 node_paths=PackedStringArray("light_camera", "light_manager") instance=ExtResource("1_pq8q7")]
+light_camera = NodePath("../../LightsViewport/LightsRoot/LightsCamera")
+light_manager = NodePath("../../LightsViewport/LightsRoot/LightManager")
+
+[node name="LightsViewport" type="SubViewport" parent="." unique_id=912422405]
+canvas_item_default_texture_filter = 0
+size = Vector2i(960, 540)
+
+[node name="LightsRoot" type="Node2D" parent="LightsViewport" unique_id=884881614]
+
+[node name="LightsCamera" type="Camera2D" parent="LightsViewport/LightsRoot" unique_id=283234010]
+
+[node name="LightManager" type="Node2D" parent="LightsViewport/LightsRoot" unique_id=863761343]
+script = ExtResource("2_28aoi")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1627005654]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1321830643]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FinalOutput" type="ColorRect" parent="CanvasLayer/Control" unique_id=64229792]
+material = SubResource("ShaderMaterial_28aoi")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
