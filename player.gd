@@ -15,6 +15,11 @@ var step_timer = 0.0
 var walking = false
 var floored = false
 
+
+func _ready() -> void:
+	$Sprite2D.play("idle")
+
+
 func _physics_process(delta: float) -> void:
 	
 	# Add the gravity
@@ -45,8 +50,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED_MAX
 		if velocity.x > 0.0:
 			facing_right = true
+			$Sprite2D.flip_h = false
 		else:
 			facing_right = false
+			$Sprite2D.flip_h = true
 		if !walking:
 			step_timer = 0.0
 		walking = true
@@ -62,6 +69,12 @@ func _physics_process(delta: float) -> void:
 			create_step_pulse()
 	
 	move_and_slide()
+	
+	if is_on_floor():
+		if abs(velocity.x) > 1.0:
+			$Sprite2D.play("walk")
+		else:
+			$Sprite2D.play("idle")
 
 
 func create_land_pulse() -> void:
@@ -85,7 +98,7 @@ func create_step_pulse() -> void:
 	var pulse = light_pulse_scene.instantiate() as LightPulse
 	pulse.global_position = self.global_position + Vector2(0.0, 11.0)
 	pulse.burst_light_energy = 0.5
-	pulse.burst_range = 2.0
+	pulse.burst_range = 1.0
 	pulse.burst_time = 2.0
 	pulse.burst_decay_time = 2.0
 	

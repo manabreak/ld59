@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://hec6hndve8un" path="res://world_root.tscn" id="1_pq8q7"]
 [ext_resource type="Script" uid="uid://bau18xql1418s" path="res://light_manager.gd" id="2_28aoi"]
 [ext_resource type="Shader" uid="uid://cs8riyhgrwi5y" path="res://light_shader.gdshader" id="3_vvh5c"]
+[ext_resource type="Texture2D" uid="uid://f2ltmoswnc4y" path="res://graphics/reveal.png" id="5_jnlp7"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_vvh5c"]
 viewport_path = NodePath("SubViewport")
@@ -15,13 +16,14 @@ resource_local_to_scene = true
 shader = ExtResource("3_vvh5c")
 shader_parameter/base_tex = SubResource("ViewportTexture_vvh5c")
 shader_parameter/lights_tex = SubResource("ViewportTexture_28aoi")
-shader_parameter/light_intensity = 2.0
+shader_parameter/light_intensity = 5.0
+shader_parameter/base_min_light = 0.0
 
 [node name="Root" type="Node2D" unique_id=1613437739]
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=1732594080]
 canvas_item_default_texture_filter = 0
-size = Vector2i(480, 270)
+size = Vector2i(320, 180)
 
 [node name="WorldRoot" parent="SubViewport" unique_id=165118444 node_paths=PackedStringArray("light_camera", "light_manager") instance=ExtResource("1_pq8q7")]
 light_camera = NodePath("../../LightsViewport/LightsRoot/LightsCamera")
@@ -35,8 +37,14 @@ size = Vector2i(960, 540)
 
 [node name="LightsCamera" type="Camera2D" parent="LightsViewport/LightsRoot" unique_id=283234010]
 
-[node name="LightManager" type="Node2D" parent="LightsViewport/LightsRoot" unique_id=863761343]
+[node name="LightManager" type="Node2D" parent="LightsViewport/LightsRoot" unique_id=863761343 node_paths=PackedStringArray("player_light")]
 script = ExtResource("2_28aoi")
+player_light = NodePath("../PlayerLight")
+
+[node name="PlayerLight" type="Sprite2D" parent="LightsViewport/LightsRoot" unique_id=2128636251]
+modulate = Color(1, 1, 1, 0.47058824)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_jnlp7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1627005654]
 
