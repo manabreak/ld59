@@ -30,6 +30,7 @@ func final_animation() -> void:
 	
 	world_root.show_bubble("...ooookay...")
 	world_root.show_bubble("Now what?")
+	MusicManager.fade_out()
 	await get_tree().create_timer(5.0).timeout
 	player.set_flipped(true)
 	await get_tree().create_timer(1.0).timeout
@@ -93,6 +94,7 @@ func final_animation() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if !enable_storytelling:
+		MusicManager.play_music()
 		return
 	
 	player.allow_signals = false

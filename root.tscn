@@ -24,14 +24,14 @@ shader_parameter/base_min_light = 0.0
 [node name="Root" type="Node2D" unique_id=1613437739]
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=1732594080]
+transparent_bg = true
 canvas_item_default_texture_filter = 0
 canvas_cull_mask = 4293918721
 size = Vector2i(320, 180)
 
-[node name="WorldRoot" parent="SubViewport" unique_id=165118444 node_paths=PackedStringArray("light_camera", "light_manager", "debug_ui", "bubbles") instance=ExtResource("1_pq8q7")]
+[node name="WorldRoot" parent="SubViewport" unique_id=165118444 node_paths=PackedStringArray("light_camera", "light_manager", "bubbles") instance=ExtResource("1_pq8q7")]
 light_camera = NodePath("../../LightsViewport/LightsRoot/LightsCamera")
 light_manager = NodePath("../../LightsViewport/LightsRoot/LightManager")
-debug_ui = NodePath("")
 bubbles = NodePath("../../CanvasLayer/Bubbles")
 
 [node name="LightsViewport" type="SubViewport" parent="." unique_id=912422405]

@@ -35,3 +35,4 @@ texture = ExtResource("3_h0khk")
 
 [node name="ActivationSound" type="AudioStreamPlayer" parent="." unique_id=1534107097]
 stream = ExtResource("5_k6yif")
+volume_db = -10.79
