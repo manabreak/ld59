@@ -12,6 +12,119 @@ func tell_note(note: NoteArea) -> void:
 		world_root.show_bubble(text)
 	player.input_enabled = true
 
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug_final"):
+		final_animation()
+
+
+func final_animation() -> void:
+	player.input_enabled = false
+	
+	player.show_fade()
+	
+	var tilemap = world_root.get_node("TileMapLayer") as TileMapLayer
+	var tween = create_tween()
+	tween.tween_property(tilemap, "modulate:a", 0.0, 5.0)
+	await tween.finished
+	
+	world_root.show_bubble("...ooookay...")
+	world_root.show_bubble("Now what?")
+	await get_tree().create_timer(5.0).timeout
+	player.set_flipped(true)
+	await get_tree().create_timer(1.0).timeout
+	player.set_flipped(false)
+	await get_tree().create_timer(1.0).timeout
+	player.set_flipped(true)
+	await get_tree().create_timer(1.0).timeout
+	player.set_flipped(false)
+	await get_tree().create_timer(1.0).timeout
+	
+	world_root.show_bubble("Is that it?")
+	world_root.show_bubble("Seriously.")
+	world_root.show_bubble("All that trouble just to get stuck in a limbo?")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("I hate this.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("SO. MUCH.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("I mean...")
+	world_root.show_bubble("In the time it took to come up with this ending...", 4.0)
+	world_root.show_bubble("...you couldn't come up with anything better?", 4.0)
+	world_root.show_bubble("That's just lazy.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("...and stupid.")
+	await get_tree().create_timer(10.0).timeout
+	world_root.show_bubble("Lazy and stupid.")
+	await get_tree().create_timer(8.0).timeout
+	world_root.show_bubble("*sigh*")
+	await get_tree().create_timer(5.0).timeout
+	world_root.show_bubble("Well, I hope you at least had some fun.", 4.0)
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("Maybe you got a bit distracted from all the crap going on?", 4.0)
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("A tiny sliver of silly nonsense?")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("A chuckle, perhaps?")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("A snort?")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("A fart?")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("I could really use a laugh right now.", 4.0)
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("You know...", 3.0)
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("You did stick around until the end, after all.", 4.0)
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("That says more about you than it does about me.", 4.0)
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("[ERROR: ENDING_NOT_FOUND]")
+	await get_tree().create_timer(4.0).timeout
+	world_root.show_bubble("Oh good, even the ending is buggy.", 4.0)
+	world_root.show_bubble("Anyway.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("Goodbye, I guess.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("...unless this loops.")
+	await get_tree().create_timer(8.0).timeout
+	world_root.show_bubble("Okay, something important is about to happen.")
+	await get_tree().create_timer(8.0).timeout
+	world_root.show_bubble("...nope.")
+	await get_tree().create_timer(8.0).timeout
+	world_root.show_bubble("We can just... stay here a bit longer.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("No rush. I'm sure the void can wait.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("No rush. No rush at all...", 4.0)
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("You know these pauses are just to pad runtime, right?", 4.0)
+	await get_tree().create_timer(4.0).timeout
+	world_root.show_bubble("I'm being a bit dramatic, aren't I?")
+	await get_tree().create_timer(4.0).timeout
+	world_root.show_bubble("I stand by it.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("...hey.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("Thanks for staying.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("Even if it was a bad decision.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("And thanks for playing.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("It means a lot to me.")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("Seriously.")
+	await get_tree().create_timer(10.0).timeout
+	world_root.show_bubble("Oh no, here it comes...")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("Any second now...")
+	await get_tree().create_timer(6.0).timeout
+	world_root.show_bubble("Hold on to your butts...")
+	await get_tree().create_timer(6.0).timeout
+	
+	
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if !enable_storytelling:

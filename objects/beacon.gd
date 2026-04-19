@@ -23,7 +23,7 @@ func on_body_entered(body: Node2D) -> void:
 	
 	if body is Player:
 		print("Player in beacon's area")
-		if body.carried_item is Block && body.carried_item.name == "Crystal":
+		if body.carried_item is Block && body.carried_item.name.begins_with("Crystal"):
 			lit = true
 			call_deferred("move_crystal", body)
 
@@ -46,6 +46,7 @@ func move_crystal(body: Player) -> void:
 	await tween.finished
 	print("Tween finished, crystal now at %s" % crystal.global_position)
 	$ActivationSound.play()
+	world_root.beacon_lit()
 	world_root.light_manager.add_global_light($LightSprite)
 	
 	var pulse = light_pulse_scene.instantiate() as LightPulse

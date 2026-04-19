@@ -19,3 +19,12 @@ func add_global_light(sprite: Sprite2D) -> void:
 	sprite.visible = true
 	add_child(sprite)
 	sprite.global_position = pos
+
+
+func fade_out_lights() -> void:
+	var tween = create_tween()
+	tween.set_parallel()
+	for c in get_children():
+		print("Fading out %s" % c.name)
+		tween.tween_property(c, "modulate:a", 0.0, 3.0)
+	await tween.finished

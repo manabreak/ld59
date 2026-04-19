@@ -31,6 +31,13 @@ func _ready() -> void:
 	$Sprite2D.play("idle")
 
 
+func show_fade() -> void:
+	var tween = create_tween()
+	$BGFade.visible = true
+	$BGFade.modulate.a = 0.0
+	tween.tween_property($BGFade, "modulate:a", 1.0, 3.0)
+
+
 func kill() -> void:
 	$KillSound.play()
 	emit_signal("player_died", self)

@@ -13,6 +13,13 @@ extends Node2D
 var initial_spawn_position: Vector2
 var last_checkpoint: Checkpoint = null
 var first_checkpoint_reached = false
+var beacons_lit = 0
+
+func beacon_lit() -> void:
+	beacons_lit += 1
+	if beacons_lit == 3:
+		print("All beacons are lit!")
+		story_teller.final_animation()
 
 func _ready() -> void:
 	initial_spawn_position = $Player.global_position
