@@ -6,6 +6,7 @@ extends Node2D
 @export var light_manager: LightManager
 @export var debug_ui: DebugUi
 @export var bubbles: Bubbles
+@export var story_teller: StoryTeller
 
 @export var checkpoints: Array[Checkpoint] = []
 
@@ -24,12 +25,16 @@ func _ready() -> void:
 			c.player_died.connect(self.on_player_died)
 
 
-func show_bubble(text: String) -> void:
-	bubbles.show_text(text)
+func show_bubble(text: String, time: float = 3.0) -> void:
+	bubbles.show_text(text, time)
 
 
 func hide_bubble() -> void:
 	bubbles.hide_text()
+
+
+func show_note(note: NoteArea) -> void:
+	story_teller.tell_note(note)
 
 
 func on_checkpoint_activated(checkpoint: Checkpoint) -> void:

@@ -5,6 +5,13 @@ extends Node2D
 @export var player: Player
 @export var world_root: WorldRoot
 
+
+func tell_note(note: NoteArea) -> void:
+	player.input_enabled = false
+	for text in note.texts:
+		world_root.show_bubble(text)
+	player.input_enabled = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if !enable_storytelling:
@@ -13,12 +20,13 @@ func _ready() -> void:
 	player.allow_signals = false
 	player.input_enabled = false
 	world_root.show_bubble("Well, 'ello.")
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	world_root.show_bubble("I'm Shiny McShinebottom.")
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	world_root.show_bubble("A connoisseur of fine arts.")
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	world_root.show_bubble("I... seem to have misplaced myself.")
+	player.allow_signals = true
 	await get_tree().create_timer(1.0).timeout
 	player.set_flipped(true)
 	await get_tree().create_timer(1.0).timeout
@@ -27,9 +35,9 @@ func _ready() -> void:
 	player.set_flipped(true)
 	await get_tree().create_timer(1.0).timeout
 	player.set_flipped(false)
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(1.0).timeout
 	world_root.show_bubble("I can't really see much...")
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	world_root.show_bubble("But I seem to get signals when I tap my feet like this.")
 	await get_tree().create_timer(2.0).timeout
 	player.create_step_pulse()

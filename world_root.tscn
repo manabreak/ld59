@@ -10,6 +10,15 @@
 [ext_resource type="Script" uid="uid://7o3obrwb0m0j" path="res://story_teller.gd" id="5_ta1kb"]
 [ext_resource type="PackedScene" uid="uid://fgshdp1nbmiv" path="res://objects/block.tscn" id="8_jkqfw"]
 [ext_resource type="Script" uid="uid://cspda1gqr4v62" path="res://message_area.gd" id="9_35ggv"]
+[ext_resource type="AudioStream" uid="uid://bxc2k4dqqddpl" path="res://sfx/jump.ogg" id="9_n48ob"]
+[ext_resource type="AudioStream" uid="uid://b5rmflbsbq3u8" path="res://sfx/walk.ogg" id="10_islf1"]
+[ext_resource type="AudioStream" uid="uid://bi523cahh6qcp" path="res://sfx/pickup.ogg" id="11_0r25b"]
+[ext_resource type="PackedScene" uid="uid://bqqv37ecycrmj" path="res://objects/rotating_cross.tscn" id="11_ntps4"]
+[ext_resource type="AudioStream" uid="uid://rbryocu756bu" path="res://sfx/putdown.ogg" id="12_i5dbi"]
+[ext_resource type="Script" uid="uid://pyva47ew24l1" path="res://floating_sprite.gd" id="12_k6e3d"]
+[ext_resource type="Script" uid="uid://d2mxbqcgnqxp6" path="res://note_area.gd" id="12_u0gtk"]
+[ext_resource type="PackedScene" uid="uid://dckfapsn5tgkf" path="res://objects/beacon.tscn" id="14_qr8tj"]
+[ext_resource type="PackedScene" uid="uid://cybl02neoxwx2" path="res://objects/crystal.tscn" id="15_hioh6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pyidc"]
 texture = ExtResource("1_bpw3s")
@@ -234,6 +243,11 @@ alpha_curve = SubResource("CurveTexture_hioh6")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_35ggv"]
 size = Vector2(57.25, 44)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n48ob"]
+size = Vector2(19.25, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_islf1"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hioh6"]
 size = Vector2(57.25, 44)
 
@@ -252,12 +266,13 @@ size = Vector2(187, 35)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qr8tj"]
 size = Vector2(27.5, 33.5)
 
-[node name="WorldRoot" type="Node2D" unique_id=165118444 node_paths=PackedStringArray("main_camera")]
+[node name="WorldRoot" type="Node2D" unique_id=165118444 node_paths=PackedStringArray("main_camera", "story_teller")]
 script = ExtResource("1_8dww3")
 main_camera = NodePath("Player/Camera2D")
+story_teller = NodePath("StoryTeller")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1129482321]
-tile_map_data = PackedByteArray("AAAkACAAAAACAAAAAAAlACAAAAACAAAAAAAmACAAAAACAAAAAAAnACAAAAACAAAAAAAoACAAAAACAAAAAAApACAAAAACAAAAAAAqACAAAAACAAAAAAArACAAAAACAAAAAAAsACAAAAACAAAAAAAtACAAAAACAAAAAAAuACAAAAACAAAAAAAvACAAAAACAAAAAAAwACAAAAACAAAAAAAxACAAAAACAAAAAAAyACAAAAACAAAAAAAzACAAAAAFAAEAAAAzAB8AAAAAAAIAAAAzAB4AAAAEAAAAAAA0AB4AAAACAAAAAAA1AB4AAAACAAAAAAA2AB4AAAAFAAAAAAA2AB8AAAAAAAIAAAA2ACAAAAAEAAEAAAA3ACAAAAACAAAAAAA4ACAAAAACAAAAAAA5ACAAAAACAAAAAAA6ACAAAAACAAAAAAA7ACAAAAACAAAAAAA8ACAAAAACAAAAAAA9ACAAAAAFAAAAAABBACAAAAAAAAEAAABFACAAAAAAAAEAAABJACAAAAAEAAAAAABKACAAAAACAAAAAABLACAAAAACAAAAAABMACAAAAACAAAAAABNACAAAAACAAAAAABOACAAAAACAAAAAABPACAAAAACAAAAAABQACAAAAAFAAAAAABJACEAAAAAAAIAAABJACIAAAAFAAEAAABIACIAAAACAAAAAABHACIAAAACAAAAAABGACIAAAACAAAAAABFACIAAAAEAAMAAABEACIAAAACAAAAAABFACEAAAAAAAIAAABDACIAAAACAAAAAABCACIAAAACAAAAAABBACIAAAAEAAMAAABBACEAAAAAAAIAAABAACIAAAACAAAAAAA/ACIAAAACAAAAAAA+ACIAAAACAAAAAAA9ACIAAAAEAAEAAAA9ACEAAAAAAAIAAABQACEAAAAAAAIAAABQACIAAAAEAAEAAABRACIAAAACAAAAAABSACIAAAACAAAAAABTACIAAAACAAAAAABUACIAAAAEAAMAAABUACEAAAAAAAIAAABUACAAAAAAAAEAAABVACIAAAACAAAAAABWACIAAAACAAAAAABXACIAAAACAAAAAABYACIAAAAFAAEAAABYACEAAAAAAAIAAABYACAAAAAEAAAAAABZACAAAAACAAAAAABaACAAAAACAAAAAABbACAAAAACAAAAAABcACAAAAACAAAAAABdACAAAAACAAAAAABeACAAAAACAAAAAABfACAAAAADAAAAAABRACEAAQAAAAAAAQBSACEAAQAAAAAAAQBTACEAAQAAAAAAAQBVACEAAQAAAAAAAQBWACEAAQAAAAAAAQBXACEAAQAAAAAAAQAjACAAAAAEAAEAAAAjAB8AAAAAAAIAAAAjAB4AAAAAAAIAAAAjAB0AAAAFAAAAAAAiAB0AAAACAAAAAAAhAB0AAAACAAAAAAAgAB0AAAAEAAEAAAAgABwAAAAAAAIAAAAgABsAAAAFAAAAAAAfABsAAAACAAAAAAAeABsAAAABAAAAAAA=")
+tile_map_data = PackedByteArray("AAAkACAAAAACAAAAAAAlACAAAAACAAAAAAAmACAAAAACAAAAAAAnACAAAAACAAAAAAAoACAAAAACAAAAAAApACAAAAACAAAAAAAqACAAAAACAAAAAAArACAAAAACAAAAAAAsACAAAAACAAAAAAAtACAAAAACAAAAAAAuACAAAAACAAAAAAAvACAAAAACAAAAAAAwACAAAAACAAAAAAAxACAAAAACAAAAAAAyACAAAAACAAAAAAAzACAAAAAFAAEAAAAzAB8AAAAAAAIAAAAzAB4AAAAEAAAAAAA0AB4AAAACAAAAAAA1AB4AAAACAAAAAAA2AB4AAAAFAAAAAAA2AB8AAAAAAAIAAAA2ACAAAAAEAAEAAAA3ACAAAAACAAAAAAA4ACAAAAACAAAAAAA5ACAAAAACAAAAAAA6ACAAAAACAAAAAAA7ACAAAAACAAAAAAA8ACAAAAACAAAAAAA9ACAAAAAFAAAAAABBACAAAAAAAAEAAABFACAAAAAAAAEAAABJACAAAAAEAAAAAABKACAAAAACAAAAAABLACAAAAACAAAAAABMACAAAAACAAAAAABNACAAAAACAAAAAABOACAAAAACAAAAAABPACAAAAACAAAAAABQACAAAAAFAAAAAABJACEAAAAAAAIAAABJACIAAAAFAAEAAABIACIAAAACAAAAAABHACIAAAACAAAAAABGACIAAAACAAAAAABFACIAAAAEAAMAAABEACIAAAACAAAAAABFACEAAAAAAAIAAABDACIAAAACAAAAAABCACIAAAACAAAAAABBACIAAAAEAAMAAABBACEAAAAAAAIAAABAACIAAAACAAAAAAA/ACIAAAACAAAAAAA+ACIAAAACAAAAAAA9ACIAAAAEAAEAAAA9ACEAAAAAAAIAAABQACEAAAAAAAIAAABQACIAAAAEAAEAAABRACIAAAACAAAAAABSACIAAAACAAAAAABTACIAAAACAAAAAABUACIAAAAEAAMAAABUACEAAAAAAAIAAABUACAAAAAAAAEAAABVACIAAAACAAAAAABWACIAAAACAAAAAABXACIAAAACAAAAAABYACIAAAAFAAEAAABYACEAAAAAAAIAAABYACAAAAAEAAAAAABZACAAAAACAAAAAABaACAAAAACAAAAAABbACAAAAACAAAAAABcACAAAAACAAAA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")
 tile_set = SubResource("TileSet_vvh5c")
 
 [node name="Checkpoint" parent="." unique_id=198456919 instance=ExtResource("4_35ggv")]
@@ -266,17 +281,25 @@ position = Vector2(1224, 496)
 [node name="Checkpoint2" parent="." unique_id=1965432713 instance=ExtResource("4_35ggv")]
 position = Vector2(504, 416)
 
+[node name="Checkpoint4" parent="." unique_id=928628428 instance=ExtResource("4_35ggv")]
+position = Vector2(510, 208)
+
+[node name="Checkpoint5" parent="." unique_id=663915846 instance=ExtResource("4_35ggv")]
+position = Vector2(995, 208)
+
 [node name="Checkpoint3" parent="." unique_id=1150321343 instance=ExtResource("4_35ggv")]
 position = Vector2(1435, 496)
 
 [node name="StoryTeller" type="Node2D" parent="." unique_id=104614071 node_paths=PackedStringArray("player", "world_root")]
+position = Vector2(2, 0)
 script = ExtResource("5_ta1kb")
 enable_storytelling = false
 player = NodePath("../Player")
 world_root = NodePath("..")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1592304653 node_paths=PackedStringArray("world_root")]
-position = Vector2(1175, 469)
+z_index = 5
+position = Vector2(976, 200)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("3_5crvj")
@@ -288,7 +311,6 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_pq8q7")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=865866002]
-position_smoothing_enabled = true
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Player" unique_id=250619034]
 position = Vector2(0, -4)
@@ -303,6 +325,37 @@ amount = 15
 texture = SubResource("AtlasTexture_u0gtk")
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_n48ob")
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="Player" unique_id=2065047790]
+stream = ExtResource("9_n48ob")
+bus = &"Sfx"
+
+[node name="WalkSound" type="AudioStreamPlayer" parent="Player" unique_id=1166267073]
+stream = ExtResource("10_islf1")
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="LandSound" type="AudioStreamPlayer" parent="Player" unique_id=1981525632]
+stream = ExtResource("10_islf1")
+pitch_scale = 0.2
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="KillSound" type="AudioStreamPlayer" parent="Player" unique_id=1037120969]
+stream = ExtResource("9_n48ob")
+pitch_scale = 0.2
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="InteractSound" type="AudioStreamPlayer" parent="Player" unique_id=1940468779]
+stream = ExtResource("11_0r25b")
+max_polyphony = 2
+bus = &"Sfx"
+
+[node name="UninteractSound" type="AudioStreamPlayer" parent="Player" unique_id=496394923]
+stream = ExtResource("12_i5dbi")
+max_polyphony = 2
+bus = &"Sfx"
 
 [node name="Block" parent="." unique_id=1296386376 instance=ExtResource("8_jkqfw")]
 position = Vector2(1504, 498)
@@ -320,6 +373,35 @@ world_root = NodePath("../..")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaStart" unique_id=1897144521]
 position = Vector2(-8.625, 17)
 shape = SubResource("RectangleShape2D_35ggv")
+
+[node name="MessageAreaStart2" type="Area2D" parent="MessageAreas" unique_id=1794356292 node_paths=PackedStringArray("world_root")]
+position = Vector2(352, 328)
+collision_mask = 2
+script = ExtResource("9_35ggv")
+default_text = "Hmm, there's a floating note here. (E to read)"
+one_shot = false
+world_root = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaStart2" unique_id=417628405]
+position = Vector2(-8.625, 17)
+shape = SubResource("RectangleShape2D_n48ob")
+
+[node name="Sprite2D" type="Sprite2D" parent="MessageAreas/MessageAreaStart2" unique_id=1967496552]
+position = Vector2(-8, 18)
+texture = ExtResource("5_bpw3s")
+region_enabled = true
+region_rect = Rect2(160, 16, 16, 16)
+script = ExtResource("12_k6e3d")
+
+[node name="NoteArea" type="Area2D" parent="MessageAreas/MessageAreaStart2" unique_id=1205056607 node_paths=PackedStringArray("world_root")]
+position = Vector2(-8, 21)
+collision_mask = 2
+script = ExtResource("12_u0gtk")
+texts = Array[String](["Says here this world has \"beacons.\"", "\"Three beacons\"... Okay...", "\"To light a beacon\"...", "...\"only those with the true of heart\"...", "...yada yada yada...", "Okay, here we go:", "\"Take a crystal to the beacon.\"", "Is that it?", "Sounds easy enough."])
+world_root = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaStart2/NoteArea" unique_id=2091332819]
+shape = SubResource("RectangleShape2D_islf1")
 
 [node name="MessageAreaBlockDrop" type="Area2D" parent="MessageAreas" unique_id=33556244 node_paths=PackedStringArray("world_root")]
 position = Vector2(1571, 578)
@@ -345,7 +427,7 @@ position = Vector2(-57, -27.5)
 shape = SubResource("RectangleShape2D_ta1kb")
 
 [node name="MessageAreaCheckpoint" type="Area2D" parent="MessageAreas" unique_id=1396389169 node_paths=PackedStringArray("world_root")]
-position = Vector2(1281, 523)
+position = Vector2(1285, 575)
 collision_mask = 2
 script = ExtResource("9_35ggv")
 default_text = "I think this is a checkpoint."
@@ -387,3 +469,24 @@ world_root = NodePath("../..")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MessageAreas/MessageAreaSpikyPit" unique_id=146721773]
 position = Vector2(221, -66)
 shape = SubResource("RectangleShape2D_qr8tj")
+
+[node name="RotatingCross" parent="." unique_id=672290447 instance=ExtResource("11_ntps4")]
+position = Vector2(616, 232)
+
+[node name="RotatingCross2" parent="." unique_id=1465675161 instance=ExtResource("11_ntps4")]
+position = Vector2(728, 232)
+
+[node name="RotatingCross3" parent="." unique_id=1193430 instance=ExtResource("11_ntps4")]
+position = Vector2(1112, 232)
+speed = -25.0
+
+[node name="RotatingCross4" parent="." unique_id=2004196615 instance=ExtResource("11_ntps4")]
+position = Vector2(1224, 232)
+speed = -25.0
+
+[node name="Beacon" parent="." unique_id=1225898626 node_paths=PackedStringArray("world_root") instance=ExtResource("14_qr8tj")]
+position = Vector2(832, 184)
+world_root = NodePath("..")
+
+[node name="Crystal" parent="." unique_id=1894263500 instance=ExtResource("15_hioh6")]
+position = Vector2(1024, 208)

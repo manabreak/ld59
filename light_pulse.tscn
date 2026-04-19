@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://f2ltmoswnc4y" path="res://graphics/reveal.png" id="3_io11p"]
 
 [node name="LightPulse" type="Node2D" unique_id=1033699111]
+light_mask = 2
+visibility_layer = 2
 script = ExtResource("1_wo0dq")
 burst_light_energy = 1.82
 reveal_light_energy = 3.1
@@ -15,7 +17,11 @@ burst_decay_time = 1.04
 reveal_decay_time = 2.895
 
 [node name="Burst" type="Sprite2D" parent="." unique_id=1968764118]
+light_mask = 2
+visibility_layer = 2
 texture = ExtResource("2_dv0du")
 
 [node name="Reveal" type="Sprite2D" parent="." unique_id=1062314690]
+light_mask = 2
+visibility_layer = 2
 texture = ExtResource("3_io11p")

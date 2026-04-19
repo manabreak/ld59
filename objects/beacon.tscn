@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dckfapsn5tgkf"]
+
+[ext_resource type="Texture2D" uid="uid://daagvjxcsax4e" path="res://graphics/sprites.png" id="1_pixpi"]
+[ext_resource type="Script" uid="uid://b1auxndqjwh0e" path="res://objects/beacon.gd" id="1_wev4v"]
+[ext_resource type="PackedScene" uid="uid://c2cpauy56t8o5" path="res://light_pulse.tscn" id="2_1pv11"]
+[ext_resource type="Texture2D" uid="uid://f2ltmoswnc4y" path="res://graphics/reveal.png" id="3_h0khk"]
+[ext_resource type="AudioStream" uid="uid://batw7q775i3af" path="res://sfx/beacon.ogg" id="5_k6yif"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0r25b"]
+size = Vector2(34, 80)
+
+[node name="Beacon" type="Area2D" unique_id=1225898626]
+collision_mask = 3
+script = ExtResource("1_wev4v")
+light_pulse_scene = ExtResource("2_1pv11")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=878977698]
+texture = ExtResource("1_pixpi")
+region_enabled = true
+region_rect = Rect2(368, 16, 48, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1780265610]
+shape = SubResource("RectangleShape2D_0r25b")
+
+[node name="CrystalSpot" type="Node2D" parent="." unique_id=588685911]
+position = Vector2(0, -32)
+
+[node name="LightSprite" type="Sprite2D" parent="." unique_id=579347353]
+visible = false
+modulate = Color(1, 1, 1, 0.6901961)
+light_mask = 2
+visibility_layer = 2
+scale = Vector2(8, 8)
+texture = ExtResource("3_h0khk")
+
+[node name="ActivationSound" type="AudioStreamPlayer" parent="." unique_id=1534107097]
+stream = ExtResource("5_k6yif")

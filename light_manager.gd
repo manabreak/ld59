@@ -14,5 +14,8 @@ func player_position_changed(position: Vector2) -> void:
 
 func add_global_light(sprite: Sprite2D) -> void:
 	print("Add global light at %s" % sprite.global_position)
+	var pos = sprite.global_position
+	sprite.get_parent().remove_child(sprite)
 	sprite.visible = true
 	add_child(sprite)
+	sprite.global_position = pos

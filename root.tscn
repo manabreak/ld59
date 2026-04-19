@@ -22,10 +22,17 @@ shader_parameter/lights_tex = SubResource("ViewportTexture_28aoi")
 shader_parameter/light_intensity = 5.0
 shader_parameter/base_min_light = 0.0
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_vyht1"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_bf3um"]
+viewport_path = NodePath("LightsViewport")
+
 [node name="Root" type="Node2D" unique_id=1613437739]
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=1732594080]
 canvas_item_default_texture_filter = 0
+canvas_cull_mask = 4293918721
 size = Vector2i(320, 180)
 
 [node name="WorldRoot" parent="SubViewport" unique_id=165118444 node_paths=PackedStringArray("light_camera", "light_manager", "debug_ui", "bubbles") instance=ExtResource("1_pq8q7")]
@@ -36,19 +43,29 @@ bubbles = NodePath("../../CanvasLayer/Bubbles")
 
 [node name="LightsViewport" type="SubViewport" parent="." unique_id=912422405]
 canvas_item_default_texture_filter = 0
-size = Vector2i(960, 540)
+canvas_cull_mask = 4293918722
+oversampling = false
+size = Vector2i(320, 180)
 
 [node name="LightsRoot" type="Node2D" parent="LightsViewport" unique_id=884881614]
+light_mask = 2
+visibility_layer = 2
 
 [node name="LightsCamera" type="Camera2D" parent="LightsViewport/LightsRoot" unique_id=283234010]
+light_mask = 2
+visibility_layer = 2
 
 [node name="LightManager" type="Node2D" parent="LightsViewport/LightsRoot" unique_id=863761343 node_paths=PackedStringArray("player_light")]
+light_mask = 2
+visibility_layer = 2
 script = ExtResource("2_28aoi")
 player_light = NodePath("../PlayerLight")
 
 [node name="PlayerLight" type="Sprite2D" parent="LightsViewport/LightsRoot" unique_id=2128636251]
 modulate = Color(1, 1, 1, 0.47058824)
-scale = Vector2(1.5, 1.5)
+light_mask = 2
+visibility_layer = 2
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("5_jnlp7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1627005654]
@@ -83,12 +100,16 @@ theme = ExtResource("5_l8v81")
 script = ExtResource("6_vyht1")
 
 [node name="PlayerSpeech" type="Label" parent="CanvasLayer/Bubbles" unique_id=420061742]
-custom_minimum_size = Vector2(160, 72)
+custom_minimum_size = Vector2(240, 144)
 layout_mode = 0
 offset_left = 8.0
 offset_top = 64.0
 offset_right = 168.0
 offset_bottom = 104.0
+text = "aaaaaaaaaa
+asdasdas
+asdasdas
+asdasdasd"
 horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 3
@@ -107,7 +128,24 @@ theme = ExtResource("5_l8v81")
 script = ExtResource("6_l8v81")
 
 [node name="PlayerPosLabel" type="Label" parent="DebugLayer/DebugUI" unique_id=399344833]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0
 text = "Player Position: 1.0, 2.0"
+
+[node name="AlbedoTest" type="TextureRect" parent="DebugLayer/DebugUI" unique_id=1662082419]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_vyht1")
+
+[node name="LightsTest" type="TextureRect" parent="DebugLayer/DebugUI" unique_id=1712155224]
+layout_mode = 0
+offset_left = 648.0
+offset_top = 1.0
+offset_right = 961.0
+offset_bottom = 181.0
+texture = SubResource("ViewportTexture_bf3um")
+expand_mode = 1
+stretch_mode = 4

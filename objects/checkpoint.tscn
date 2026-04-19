@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c4rhi3jdf4icv" path="res://checkpoint.gd" id="1_t1bj6"]
 [ext_resource type="Texture2D" uid="uid://daagvjxcsax4e" path="res://graphics/sprites.png" id="2_md0ld"]
 [ext_resource type="Texture2D" uid="uid://f2ltmoswnc4y" path="res://graphics/reveal.png" id="3_md0ld"]
+[ext_resource type="AudioStream" uid="uid://pl3j1viumbc8" path="res://sfx/checkpoint.ogg" id="4_tctsx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qr8tj"]
 atlas = ExtResource("2_md0ld")
@@ -24,7 +25,13 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_hioh6")
 
 [node name="LightSprite" type="Sprite2D" parent="." unique_id=1478768594]
-visible = false
-modulate = Color(1, 1, 1, 0.6901961)
+light_mask = 2
+visibility_layer = 2
+position = Vector2(0, -13)
 scale = Vector2(2, 2)
 texture = ExtResource("3_md0ld")
+
+[node name="ActivationSound" type="AudioStreamPlayer" parent="." unique_id=1522773355]
+stream = ExtResource("4_tctsx")
+pitch_scale = 0.4
+bus = &"Sfx"

@@ -21,7 +21,7 @@ var walking = false
 var floored = false
 var coyote_timer = 0.0
 
-var nearby_item: Block = null
+var nearby_item: Node2D = null
 var carried_item: Block = null
 
 var allow_signals = true
@@ -32,7 +32,7 @@ func _ready() -> void:
 
 
 func kill() -> void:
-	print("player.kill()")
+	$KillSound.play()
 	emit_signal("player_died", self)
 
 
@@ -44,10 +44,13 @@ func _physics_process(delta: float) -> void:
 	if input_enabled && Input.is_action_just_pressed("interact"):
 		print("Interact")
 		if carried_item != null:
+			$UninteractSound.play()
 			carried_item.uninteract(self)
 		elif nearby_item != null:
-			print("Interact with %s" % nearby_item.name)
-			nearby_item.interact(self)
+			if nearby_item is Block || nearby_item is NoteArea || nearby_item is Beacon:
+				print("Interact with %s" % nearby_item.name)
+				$InteractSound.play()
+				nearby_item.interact(self)
 	
 	# Add the gravity
 	if not is_on_floor():
@@ -56,8 +59,9 @@ func _physics_process(delta: float) -> void:
 			coyote_timer = COYOTE_TIME
 		floored = false
 		coyote_timer -= delta
-	else:
+	else:   
 		if !floored:
+			$LandSound.play()
 			create_land_pulse()
 			
 		floored = true
@@ -92,8 +96,9 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() && walking:
 		step_timer -= delta
 		if step_timer <= 0.0:
-			# print("Step %d" % Time.get_ticks_msec())
-			step_timer += 0.5
+			step_timer += 0.3
+			$WalkSound.pitch_scale = randf_range(0.8, 1.2)
+			$WalkSound.play()
 			create_step_pulse()
 	
 	move_and_slide()
@@ -118,6 +123,8 @@ func jump() -> void:
 	velocity.y = JUMP_VELOCITY_INITIAL
 	jump_timer = JUMP_APPLY_TIME
 	coyote_timer = 0.0
+	$JumpSound.pitch_scale = randf_range(0.8, 1.2)
+	$JumpSound.play()
 
 
 func set_flipped(flipped: bool) -> void:
@@ -131,12 +138,12 @@ func create_land_pulse() -> void:
 	var pulse = light_pulse_scene.instantiate() as LightPulse
 	pulse.global_position = self.global_position + Vector2(0.0, 11.0)
 	pulse.burst_light_energy = 1.0
-	pulse.burst_range = 2.0
+	pulse.burst_range = 1.0 
 	pulse.burst_time = 2.0
 	pulse.burst_decay_time = 3.0
 	
 	pulse.reveal_light_energy = 1.5
-	pulse.reveal_range = 2.5
+	pulse.reveal_range = 0.8
 	pulse.reveal_time = 0.1
 	pulse.reveal_decay_time = 6.0
 	
@@ -150,12 +157,12 @@ func create_step_pulse() -> void:
 	var pulse = light_pulse_scene.instantiate() as LightPulse
 	pulse.global_position = self.global_position + Vector2(0.0, 11.0)
 	pulse.burst_light_energy = 0.5
-	pulse.burst_range = 1.0
+	pulse.burst_range = 0.3
 	pulse.burst_time = 2.0
 	pulse.burst_decay_time = 2.0
 	
 	pulse.reveal_light_energy = 1.0
-	pulse.reveal_range = 2.0
+	pulse.reveal_range = 0.67
 	pulse.reveal_time = 0.5
 	pulse.reveal_decay_time = 6.0
 	

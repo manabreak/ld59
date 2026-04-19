@@ -21,6 +21,7 @@ func _physics_process(delta: float) -> void:
 
 
 func respawn() -> void:
+	print("Respawn called for %s" % self.name)
 	collision_layer = 0
 	collision_mask = 0
 	linear_velocity = Vector2.ZERO

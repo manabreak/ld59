@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bqqv37ecycrmj"]
+
+[ext_resource type="Script" uid="uid://c56joj4xf0xnj" path="res://objects/rotating_cross.gd" id="1_8j2yt"]
+[ext_resource type="Texture2D" uid="uid://daagvjxcsax4e" path="res://graphics/sprites.png" id="1_miysd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n48ob"]
+size = Vector2(78, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_islf1"]
+size = Vector2(14, 78)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ta1kb"]
+
+[node name="RotatingCross" type="Node2D" unique_id=672290447]
+script = ExtResource("1_8j2yt")
+
+[node name="RotatingThing" type="RigidBody2D" parent="." unique_id=1771589122]
+mass = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="RotatingThing" unique_id=355527245]
+texture = ExtResource("1_miysd")
+region_enabled = true
+region_rect = Rect2(272, 0, 80, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotatingThing" unique_id=1228387361]
+shape = SubResource("RectangleShape2D_n48ob")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="RotatingThing" unique_id=171102702]
+shape = SubResource("RectangleShape2D_islf1")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="." unique_id=191557476]
+node_a = NodePath("../StaticBody2D")
+node_b = NodePath("../RotatingThing")
+motor_enabled = true
+motor_target_velocity = 0.43633232
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1382608923]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=473737930]
+shape = SubResource("CircleShape2D_ta1kb")
