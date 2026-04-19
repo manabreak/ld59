@@ -92,9 +92,11 @@ func final_animation() -> void:
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func start_intro() -> void:
 	if !enable_storytelling:
 		MusicManager.play_music()
+		player.allow_signals = true
+		player.input_enabled = true
 		return
 	
 	player.allow_signals = false

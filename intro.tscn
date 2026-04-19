@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://dxbw6pleiaaon"]
+
+[ext_resource type="Theme" uid="uid://dsnc3ktpo05ln" path="res://objects/new_theme.tres" id="1_s2ta7"]
+[ext_resource type="Script" uid="uid://dg7llrggg87rj" path="res://intro.gd" id="2_ayt76"]
+[ext_resource type="AudioStream" uid="uid://bi523cahh6qcp" path="res://sfx/pickup.ogg" id="3_7a8ye"]
+
+[node name="Node2D" type="Node2D" unique_id=1044067983]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=50655859]
+
+[node name="Intro" type="Control" parent="UI" unique_id=707301042 node_paths=PackedStringArray("play_button", "fade")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_s2ta7")
+script = ExtResource("2_ayt76")
+play_button = NodePath("VBoxContainer/PlayButton")
+fade = NodePath("../Fade")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Intro" unique_id=978880330]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -36.0
+offset_right = 63.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI/Intro/VBoxContainer" unique_id=1520728843]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "MISPLACED"
+
+[node name="Spacer" type="Control" parent="UI/Intro/VBoxContainer" unique_id=62243542]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="UI/Intro/VBoxContainer" unique_id=545152172]
+layout_mode = 2
+text = "Play"
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="UI/Intro/VBoxContainer/PlayButton" unique_id=2105066189]
+stream = ExtResource("3_7a8ye")
+volume_db = -9.642
+
+[node name="Fade" type="ColorRect" parent="UI" unique_id=1153519382]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

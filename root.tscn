@@ -29,10 +29,11 @@ canvas_item_default_texture_filter = 0
 canvas_cull_mask = 4293918721
 size = Vector2i(320, 180)
 
-[node name="WorldRoot" parent="SubViewport" unique_id=165118444 node_paths=PackedStringArray("light_camera", "light_manager", "bubbles") instance=ExtResource("1_pq8q7")]
+[node name="WorldRoot" parent="SubViewport" unique_id=165118444 node_paths=PackedStringArray("light_camera", "light_manager", "bubbles", "fade") instance=ExtResource("1_pq8q7")]
 light_camera = NodePath("../../LightsViewport/LightsRoot/LightsCamera")
 light_manager = NodePath("../../LightsViewport/LightsRoot/LightManager")
 bubbles = NodePath("../../CanvasLayer/Bubbles")
+fade = NodePath("../../CanvasLayer/Fade")
 
 [node name="LightsViewport" type="SubViewport" parent="." unique_id=912422405]
 canvas_item_default_texture_filter = 0
@@ -107,3 +108,11 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 3
 clip_text = true
+
+[node name="Fade" type="ColorRect" parent="CanvasLayer" unique_id=1757264542]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

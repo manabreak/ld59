@@ -7,6 +7,7 @@ extends Node2D
 @export var debug_ui: DebugUi
 @export var bubbles: Bubbles
 @export var story_teller: StoryTeller
+@export var fade: ColorRect
 
 @export var checkpoints: Array[Checkpoint] = []
 
@@ -22,6 +23,8 @@ func beacon_lit() -> void:
 		story_teller.final_animation()
 
 func _ready() -> void:
+	$Player.allow_signals = false
+	$Player.input_enabled = false
 	initial_spawn_position = $Player.global_position
 	
 	for c in get_children():
@@ -30,6 +33,12 @@ func _ready() -> void:
 			c.checkpoint_activated.connect(self.on_checkpoint_activated)
 		elif c is Player:
 			c.player_died.connect(self.on_player_died)
+	
+	var tween = create_tween()
+	tween.tween_property(fade, "modulate:a", 0.0, 2.0)
+	await tween.finished
+	
+	story_teller.start_intro()
 
 
 func show_bubble(text: String, time: float = 3.0, delay: float = 0.0) -> void:
