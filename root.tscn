@@ -5,7 +5,6 @@
 [ext_resource type="Shader" uid="uid://cs8riyhgrwi5y" path="res://light_shader.gdshader" id="3_vvh5c"]
 [ext_resource type="Texture2D" uid="uid://f2ltmoswnc4y" path="res://graphics/reveal.png" id="5_jnlp7"]
 [ext_resource type="Theme" uid="uid://dsnc3ktpo05ln" path="res://objects/new_theme.tres" id="5_l8v81"]
-[ext_resource type="Script" uid="uid://mxfe70yh35xl" path="res://debug_ui.gd" id="6_l8v81"]
 [ext_resource type="Script" uid="uid://df6o3hgik7gqx" path="res://bubbles.gd" id="6_vyht1"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_vvh5c"]
@@ -22,12 +21,6 @@ shader_parameter/lights_tex = SubResource("ViewportTexture_28aoi")
 shader_parameter/light_intensity = 5.0
 shader_parameter/base_min_light = 0.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_vyht1"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_bf3um"]
-viewport_path = NodePath("LightsViewport")
-
 [node name="Root" type="Node2D" unique_id=1613437739]
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=1732594080]
@@ -38,7 +31,7 @@ size = Vector2i(320, 180)
 [node name="WorldRoot" parent="SubViewport" unique_id=165118444 node_paths=PackedStringArray("light_camera", "light_manager", "debug_ui", "bubbles") instance=ExtResource("1_pq8q7")]
 light_camera = NodePath("../../LightsViewport/LightsRoot/LightsCamera")
 light_manager = NodePath("../../LightsViewport/LightsRoot/LightManager")
-debug_ui = NodePath("../../DebugLayer/DebugUI")
+debug_ui = NodePath("")
 bubbles = NodePath("../../CanvasLayer/Bubbles")
 
 [node name="LightsViewport" type="SubViewport" parent="." unique_id=912422405]
@@ -114,38 +107,3 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 3
 clip_text = true
-
-[node name="DebugLayer" type="CanvasLayer" parent="." unique_id=330619866]
-
-[node name="DebugUI" type="Control" parent="DebugLayer" unique_id=1713659455]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("5_l8v81")
-script = ExtResource("6_l8v81")
-
-[node name="PlayerPosLabel" type="Label" parent="DebugLayer/DebugUI" unique_id=399344833]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 20.0
-text = "Player Position: 1.0, 2.0"
-
-[node name="AlbedoTest" type="TextureRect" parent="DebugLayer/DebugUI" unique_id=1662082419]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("ViewportTexture_vyht1")
-
-[node name="LightsTest" type="TextureRect" parent="DebugLayer/DebugUI" unique_id=1712155224]
-layout_mode = 0
-offset_left = 648.0
-offset_top = 1.0
-offset_right = 961.0
-offset_bottom = 181.0
-texture = SubResource("ViewportTexture_bf3um")
-expand_mode = 1
-stretch_mode = 4

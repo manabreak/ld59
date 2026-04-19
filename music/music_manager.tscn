@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://xb83y3x2g0wd"]
+
+[ext_resource type="AudioStream" uid="uid://b08iily5seyx6" path="res://music/ld59_intro.ogg" id="1_pqths"]
+[ext_resource type="Script" uid="uid://dadvw5al7l41s" path="res://music/music_manager.gd" id="1_wi8mw"]
+[ext_resource type="AudioStream" uid="uid://bcu51682enkos" path="res://music/ld59_loop.ogg" id="2_wi8mw"]
+
+[node name="MusicManager" type="Node2D" unique_id=463008843]
+script = ExtResource("1_wi8mw")
+
+[node name="Intro" type="AudioStreamPlayer" parent="." unique_id=152586490]
+stream = ExtResource("1_pqths")
+bus = &"Music"
+
+[node name="Loop" type="AudioStreamPlayer" parent="." unique_id=961660306]
+stream = ExtResource("2_wi8mw")
+bus = &"Music"
+parameters/looping = true

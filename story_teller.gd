@@ -137,6 +137,8 @@ func _ready() -> void:
 	await get_tree().create_timer(4.0).timeout
 	
 	world_root.hide_bubble()
+	
+	MusicManager.play_music()
 	player.input_enabled = true
 	player.allow_signals = true
 	

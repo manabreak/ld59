@@ -104,8 +104,6 @@ func _physics_process(delta: float) -> void:
 		step_timer -= delta
 		if step_timer <= 0.0:
 			step_timer += 0.3
-			$WalkSound.pitch_scale = randf_range(0.8, 1.2)
-			$WalkSound.play()
 			create_step_pulse()
 	
 	move_and_slide()
@@ -160,6 +158,9 @@ func create_land_pulse() -> void:
 func create_step_pulse() -> void:
 	if !allow_signals:
 		return
+	
+	$WalkSound.pitch_scale = randf_range(0.8, 1.2)
+	$WalkSound.play()
 	
 	var pulse = light_pulse_scene.instantiate() as LightPulse
 	pulse.global_position = self.global_position + Vector2(0.0, 11.0)
