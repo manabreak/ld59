@@ -32,8 +32,8 @@ func _ready() -> void:
 			c.player_died.connect(self.on_player_died)
 
 
-func show_bubble(text: String, time: float = 3.0) -> void:
-	bubbles.show_text(text, time)
+func show_bubble(text: String, time: float = 3.0, delay: float = 0.0) -> void:
+	bubbles.show_text(text, time, delay)
 
 
 func hide_bubble() -> void:
